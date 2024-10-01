@@ -1,0 +1,21 @@
+---
+title: "Practice 2.3"
+author: "曾冠淳 R13241201"
+date: "2024-10-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+rairuoho<-"https://www.dipintothereef.com/uploads/3/7/3/5/37359245/rairuoho.txt"
+data<-read.table(rairuoho,sep="",header=T)
+data
+library(dplyr)
+library(tidyr)
+data <- data[,-12:-13]
+data$treatment[data$treatment=="nutrient"]<-"enriched"
+head(data)
+data<-unite(data,day,day3,day4,day5,day6,day7,day8, sep = ",", remove = TRUE, na.rm = FALSE)
+data<-unite(data,spatial,spatial1,spatial2, sep = ",", remove = TRUE, na.rm = FALSE)
+data
+```
+
