@@ -1,0 +1,45 @@
+---
+title: "Practice 3.2"
+author: "曾冠淳 R13241201"
+date: "2024-10-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(dplyr)
+library(tidyr)
+plant<-c("plant 1","plant 2","plant 3","plant 4","plant 5")
+start_experiment<-c(4,5,3,6,7)
+end_experiment<-c(9,6,5,4,7)
+data<-data.frame(plant,start_experiment,end_experiment)
+
+a<-data %>%
+   pivot_longer(start_experiment:end_experiment, 
+                names_to = "time", 
+                values_to = "height")
+as.factor(a$time)
+my.experiment<-list(a)
+str(my.experiment)
+
+growth <- (end_experiment - start_experiment) / start_experiment * 100
+growth<-round(growth,1)
+typeof(growth)
+growth_status <- ifelse(growth>0,"good","bad")
+data<-data.frame(plant,growth,growth_status)
+data
+my.experiment<-list(plant,growth,growth_status)
+str(my.experiment)
+
+
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
