@@ -1,0 +1,47 @@
+---
+title: "Practice 4.1"
+author: "曾冠淳 R13241201"
+date: "2024-10-19"
+output: html_document
+---
+
+```{r pair,echo=FALSE}
+#pdf(file = "Scatterplot Matrix.pdf", paper = "A4")
+
+iris
+pairs(iris[1:4], 
+      main = "Scatterplot Matrix of Iris Dataset",
+      pch = 21, 
+      bg = c("black","red","green")[unclass(iris$Species)],
+      labels = c("Sepal Length", "Sepal Width", "Petal Length", "Petal Width"))
+
+#dev.off()
+
+```
+
+```{r plot,echo=FALSE}
+
+#pdf(file = "Width-Length.pdf", width = 5.44, height = 4.16)
+iris
+colors <- c("black","red","green")
+shapes <- c(1, 2, 3) 
+
+plot(iris$Petal.Length, iris$Petal.Width, 
+     col = colors[as.numeric(iris$Species)], 
+     pch = shapes[as.numeric(iris$Species)],
+     xlab = "Petal length (cm)", 
+     ylab = "Petal width (cm)", 
+     main = "Petal width vs. length")
+
+legend("topleft", legend = levels(iris$Species), 
+       col = colors, pch = shapes)
+
+abline(lm(Petal.Width ~ Petal.Length, data = iris))
+text(6, 0.5, paste("R =", round(cor(iris$Petal.Length, iris$Petal.Width), 2)))
+
+
+#dev.off()
+
+```
+
+
