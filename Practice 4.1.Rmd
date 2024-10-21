@@ -38,9 +38,12 @@ legend("topleft", legend = levels(iris$Species),
 
 abline(lm(Petal.Width ~ Petal.Length, data = iris))
 text(6, 0.5, paste("R =", round(cor(iris$Petal.Length, iris$Petal.Width), 2)))
-
-
 #dev.off()
+
+# Nice. You can also try to get the R from your lm:
+# lm_iris<-lm(Petal.Width ~ Petal.Length, data = iris)
+# r2_value <- summary(lm_iris)$r.squared
+# text(5.5, 0.5, labels = paste("R = ", round(sqrt(r2_value), 2)), pos = 4)
 
 ```
 
