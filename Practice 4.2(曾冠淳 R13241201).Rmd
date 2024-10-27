@@ -1,0 +1,25 @@
+---
+title: "Pracrice 4.2"
+author: "曾冠淳 R13241201"
+date: "2024-10-27"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+
+rairuoho<-"https://www.dipintothereef.com/uploads/3/7/3/5/37359245/rairuoho.txt"
+data <- read.delim(rairuoho, header = TRUE)
+data <- data[,-10:-13]
+data$growth <- data$day8 - data$day3
+data
+
+ggplot(data, aes(x = treatment, y = growth, fill = treatment)) +
+           geom_boxplot() +
+            labs(title = "Nutrient vs. Water",
+                  x = "Treatment",
+                  y = "Growth (day8 - day3)") 
+
+
+```
+
