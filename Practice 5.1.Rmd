@@ -1,0 +1,31 @@
+---
+title: "Practice 5.1"
+author: "曾冠淳"
+date: "2024-11-01"
+output: html_document
+---
+
+```{r}
+
+library(rgbif)
+library(maps)
+
+gbif <- occ_search(scientificName = "Phascolarctos cinereus", hasCoordinate = TRUE,basisOfRecord = 'HUMAN_OBSERVATION', limit = 1000) 
+gbif_data <- gbif$data
+
+xlim <- range(gbif_data$decimalLongitude, na.rm = TRUE) + c(-2, 2)
+ylim <- range(gbif_data$decimalLatitude, na.rm = TRUE) + c(-2, 2)
+
+maps::map('world', xlim = xlim, ylim = ylim, col = "lightgray", fill = TRUE, border = TRUE)
+box()
+
+points(gbif_data$decimalLongitude, gbif_data$decimalLatitude, col = "green", pch = 21, bg = "white", lwd = 0.5)
+title(main = "Distribution of Phascolarctos cinereus")
+
+text(142, -26, "Australia", col = "purple", cex = 1.5)
+
+axis(1, at = seq(135, 155, by = 5), labels = paste0(seq(135, 155, by = 5), "°E"))
+axis(2, at = seq(-40, -20, by = 5), labels = paste0(seq(-40, -20, by = 5), "°S"),las=1)
+
+```
+
