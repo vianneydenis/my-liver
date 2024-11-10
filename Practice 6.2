@@ -1,0 +1,63 @@
+---
+title: "Practice 6.2"
+author: "曾冠淳 R13241201"
+date: "2024-11-10"
+output: html_document
+---
+
+```{r }
+library(animation)
+  
+  grow <- function(start_1, start_2, growth.rate) {
+    num_gen <- 30
+    N1 <- rep(0, num_gen + 1)
+    N2 <- rep(0, num_gen + 1)
+    generation <- 1:num_gen
+    K1 <- 100
+    K2 <- 120
+    a12 <- 0.8
+    a21 <- 0.8
+    N1[1] <- start_1
+    N2[1] <- start_2
+      
+    for (i in 2:num_gen) {
+      N1[i] <- N1[i-1] + (growth.rate * N1[i-1] * ((K1 - N1[i-1] - (a12 * N2[i-1])) / K1))
+      N2[i] <- N2[i-1] + (growth.rate * N2[i-1] * ((K2 - N2[i-1] - (a21 * N1[i-1])) / K2))}
+    
+    title <- ifelse(start_1 > 0 && start_2 > 0, "Both Species Competing",
+                         ifelse(start_1 > 0, "Species 1 Alone", "Species 2 Alone"))
+    
+    plot(generation, N1[1:num_gen], type = "n", ylim = c(0, max(c(K1, K2))),
+         xlab = "Generation", ylab = "Population Size", main = title)
+    
+    text(x = 1, y = max(c(K1, K2)) * 0.9, labels = paste("Growth Rate =", growth.rate), adj = c(0, 0))
+    
+    if (start_1 > 0) {
+      lines(generation, N1[1:num_gen], type = "b", col = "black", pch = 21)}
+    
+    if (start_2 > 0) {
+      lines(generation, N2[1:num_gen], type = "b", col = "red", pch = 21)}
+    
+    if (start_1 > 0 && start_2 > 0) {
+      legend("right", legend = c("Species 1", "Species 2"), col = c("black", "red"), pch = 21)
+    } else if (start_1 > 0) {
+      legend("right", legend = "Species 1", col = "black", pch = 21)
+    } else if (start_2 > 0) {
+      legend("right", legend = "Species 2", col = "red", pch = 21)}}
+  
+  
+  growth.rates <- c(0.5, 1.0, 1.5)
+  saveGIF({
+    for (rate in growth.rates) {
+      par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+      
+      grow(1, 0, rate)
+      grow(0, 1, rate) 
+      grow(1, 2, rate) 
+    }
+  }, movie.name = "population_growth.gif", interval = 1, ani.width = 600, ani.height = 600)
+
+
+```
+
+
