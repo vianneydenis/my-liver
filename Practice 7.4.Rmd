@@ -1,0 +1,36 @@
+---
+title: "Practice 7.4"
+author: "曾冠淳"
+date: "2024-11-15"
+output: html_document
+---
+
+```{r nutrient}
+
+rairuoho<-"https://www.dipintothereef.com/uploads/3/7/3/5/37359245/rairuoho.txt"
+data <- read.delim(rairuoho, header = TRUE)
+
+
+pearson.test <- function(x,y){
+  n <- length(x) 
+  r <- cor(x, y)
+  t <- r * sqrt((n - 2) / (1 - r^2))
+  p <- 2 * pt(-abs(t), df = n - 2)
+  RVAL <- list(correlation = r,t_value = t,p_value = p)
+  return(RVAL)
+}
+
+nutrient <- subset(data,data$treatment=="nutrient")
+water <- subset(data,data$treatment=="water")
+
+pearson.test(nutrient$day3,nutrient$day4)
+pearson.test(nutrient$day3,nutrient$day8)
+
+```
+
+
+```{r water}
+pearson.test(water$day3,water$day4)
+pearson.test(water$day3,water$day8)
+```
+
